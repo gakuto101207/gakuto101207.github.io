@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sight vs Sound</title>
+  <meta charset="UTF-8">
+  <style>
+    div.c {
+      margin: 0;
+      font-size: 20px;
+      text-align: center;
+    }
+    iframe.c{
+      margin: 0;
+    }
+    input {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 1em 0.3em;
+      padding: 0.6em 1em;
+      font-size: 1em;
+      background-color: black;
+      color: #FFF;
+      border-radius: 3px;
+      border: 0;
+      transition: 0.3s;
+    }
+    input:hover {
+      background-color: gray;
+    }
+    input:disabled {
+      color: gray;
+      background: black;
+      cursor: not-allowed;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="c">
+    <header>
+      <h1>Sight vs Sound</h1>
+    </header>
+    <br>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe9JCzNJdJOeP0YCDG04A2OBao-nhhS0DZxYD-UNRRBWircoQ/viewform?embedded=true" id="form" width="640" height="500" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+    <br>
+    <input type="button" value="6秒の実験を行う" onClick="location.href='pilot-test_6.html'" id="resumeButton_6" disabled>
+    <input type="button" value="12秒の実験を行う" onClick="location.href='pilot-test_12.html'" id="resumeButton_12" disabled>
+  </div>
+</body>
+  <script type="text/javascript">
+
+    function firstscript() {
+      var randoms = [];
+      var min = 1, max = 10;
+        for(i = min; i <= max; i++){
+          while(true){
+            var pass = intRandom(min, max);
+            if(!randoms.includes(pass)){
+              randoms.push(pass);
+              break;
+            }
+          }
+        }
+        function intRandom(min, max){
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        alert('あなたのIDは  『' + randoms.join("") + '』  です。これから表示されるフォームの説明を熟読し、このIDを貼り付けてください。また、このIDは次の実験ページでも使用しますので、コピーするかメモをしてください。');
+    }
+    setTimeout(firstscript, 100);
+
+      var load = 0;
+      document.getElementById('form').onload = function () {
+        load++;
+          if (load > 1) {
+            var button_6 = document.getElementById('resumeButton_6');
+            var button_12 = document.getElementById('resumeButton_12');
+            button_6.disabled = false;
+            button_12.disabled = false;
+              function secondscript(){
+                alert('[6秒の実験]か[12秒の実験]をお選びください。');
+              }
+              setTimeout(secondscript, 100);
+          }
+      }
+
+  </script>
+</html>
