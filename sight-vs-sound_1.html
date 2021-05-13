@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sight vs Sound</title>
+  <meta charset="UTF-8">
+  <style>
+    div.c {
+      margin: 0;
+      font-size: 20px;
+      text-align: center;
+    }
+    iframe.c{
+      margin: 0;
+    }
+    input {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 1em 0.3em;
+      padding: 0.6em 1em;
+      font-size: 1em;
+      background-color: black;
+      color: #FFF;
+      border-radius: 3px;
+      border: 0;
+      transition: 0.3s;
+    }
+    input:hover {
+      background-color: gray;
+    }
+    input:disabled {
+      color: gray;
+      background: black;
+      cursor: not-allowed;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="c">
+    <header>
+      <h1>Sight vs Sound</h1>
+    </header>
+    <br>
+    <iframe src="agreement.pdf" class="c" height="2315" width="800"></iframe>
+    <br>
+    <input type="button" value="同意する" onClick="location.href='investigate.html'">
+  </div>
+</body>
+<script>
+  function firstscript(){
+    alert('実験説明書の表示に時間がかかる場合がございます。ご了承のほどよろしくお願いします。表示されない場合はページの再度読み込みをお願いします。');
+  }
+  setTimeout(firstscript,100);
+</script>
+</html>
