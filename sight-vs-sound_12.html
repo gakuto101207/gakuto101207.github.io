@@ -47,41 +47,53 @@
       <h1>Sight vs Sound</h1>
     </header>
     <br>
-    <video class="c" id="video" poster="white.jpg" height="480" width="800" autoplay></video>
+    <video id="video" poster="white.jpg" height="480" width="800" autoplay></video>
     <br>
-    <p class="c"><span id="count">0</span> / 9</P>
+    <p><span id="count">0</span> / 9</P>
     <input type="button" value="START" class="btn-flat-border" onClick="prepareVideoOrder(); this.disabled=true;">
     <input type="button" value="NEXT" class="btn-flat-border" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton" disabled>
-    <br>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerqJ_IAlETEK3WLJljXxPKjiNo7-9Ph3Vgl6leXwvrLbz9Dw/viewform?embedded=true" id='form' width="640" height="3700" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+    <p id="hide">実験回答フォーム非表示中</p>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerqJ_IAlETEK3WLJljXxPKjiNo7-9Ph3Vgl6leXwvrLbz9Dw/viewform?embedded=true" id='form' width="640" height="1300" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
     <br>
   </div>
 </body>
   <script type="text/javascript">
 
-    function firstscript() {
+    function setup() {
       alert('実験を開始する前に、これから表示されるフォーム説明を熟読してください。前ページで使用したIDを貼り付けてください。');
+      const hide = document.getElementById("hide");
+      hide.style.visibility = "hidden";
     }
-    setTimeout(firstscript, 100);
+    setTimeout(setup, 100);
 
     function endscript(){
       alert('これにて実験は終了となります。ご協力ありがとうございました。');
     }
 
-    var load = 0;
-    document.getElementById('form').onload = function () {
-      load++;
-        if (load > 1) {
-          setTimeout(endscript, 100);
-        }
-    }
-
     var videolist = [];
     var trialOrder = [];
     var count = 0;
+    var load = 0;
+    const form = document.getElementById("form");
+    const hide = document.getElementById("hide");
+    var button_element = document.getElementById('resumeButton');
     // var alphaArray = {a:[1,2,3],b:[1,3,2],c:[2,1,3],d:[2,3,1],e:[3,1,2],f:[3,2,1]};
     // var randNum = shuffle(alphaArray);
     // alphaArray = randNum;
+    
+    document.getElementById('form').onload = function () {
+      load++;
+        if (load > 1) {
+          form.style.visibility = "hidden";
+          hide.style.visibility = "visible";
+          window.scroll(0,0);
+          button_element.disabled = false;
+        }
+        else if (load > 9) {
+          form.style.visibility = "visible";
+          setTimeout(endscript, 100);
+        }
+    }
 
     function prepareVideoOrder(){
       var triad = createRandomOrder(9);
@@ -136,7 +148,9 @@
       //読み出し
       var videoorder = 0;
       var video = document.getElementById("video");
-      var button_element = document.getElementById('resumeButton');
+      //var button_element = document.getElementById('resumeButton');
+      form.style.visibility = "hidden";
+      hide.style.visibility = "visible";
 
       video.src = videolist[videoorder];
       video.load();
@@ -152,10 +166,13 @@
           video.autoplay = false;
 
           if(videoorder != videolist.length){
-            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください   ");
-            button_element.disabled = false;
+            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください");
+            form.style.visibility="visible";
+            hide.style.visibility="hidden";
           } else{
-            alert("ページ下のフォームに第" + count + "問の回答を入力してください。また、以下の文字列をコピーしフォームの回答欄に貼り付けてください。     『" + trialOrder.join('') + "』     これにて実験は終了となります。最後にフォームの送信をお願いします。");
+            alert("ページ下のフォームに第" + count + "問の回答を入力してください。また、以下の文字列をの回答欄に貼り付け、最後にフォームの送信をお願いします。 　『" + trialOrder.join('') + "』  ");
+            form.style.visibility="visible";
+            hide.style.visibility="hidden";
           }
         }
       });
