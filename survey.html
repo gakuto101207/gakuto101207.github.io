@@ -69,20 +69,21 @@
     }
     setTimeout(firstscript, 100);
 
-      var load = 0;
-      document.getElementById('form').onload = function () {
-        load++;
-          if (load > 1) {
-            var button_6 = document.getElementById('resumeButton_6');
-            var button_12 = document.getElementById('resumeButton_12');
-            button_6.disabled = false;
-            button_12.disabled = false;
-              function secondscript(){
-                alert('[6秒の実験]か[12秒の実験]をお選びください。');
-              }
-              setTimeout(secondscript, 100);
+    var load = 0;
+    var button_6 = document.getElementById('resumeButton_6');
+    var button_12 = document.getElementById('resumeButton_12');
+    document.getElementById('form').onload = function () {
+      load++;
+        if (load > 1) {
+          button_6.disabled = false;
+          button_12.disabled = false;
+          setTimeout(secondscript, 100);
           }
       }
+    
+    function secondscript(){
+      alert('[6秒の実験]か[12秒の実験]をお選びください。');
+    }
 
   </script>
 </html>
