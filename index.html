@@ -44,7 +44,7 @@
     </header>
     <br>
     <div>
-     <iframe title="実験説明書" id="iframe" src="agreement.pdf" width="65%"></iframe>
+      <iframe src='agreement.pdf' width='100%' height='1000px' frameBorder='0' scrolling='no' id='iframe' onLoad='iframeResize'></iframe>
     </div>
     <br>
     <input type="button" value="同意する" onClick="location.href='survey.html'">
@@ -56,10 +56,12 @@
   }
   setTimeout(firstscript,100);
 
-  document.getElementById('iframe').onload = function () {
-    var height = window.innerHeight;
-    iframe.style.height = height + 'px';
+  /*function iframeResize(){
+    const frame = document.getElementById('iframe');
+    const height = frame.contentWindow.document.body.scrollHeight;
+    frame.style.height = height + 'px';
+    alert(height);
   }
-
+  */
 </script>
 </html>
