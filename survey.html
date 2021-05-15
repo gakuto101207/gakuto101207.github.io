@@ -42,10 +42,10 @@
       <h1>Sight vs Sound</h1>
     </header>
     <br>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe9JCzNJdJOeP0YCDG04A2OBao-nhhS0DZxYD-UNRRBWircoQ/viewform?embedded=true" id="form" width="640" height="2616" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
-    <br>
     <input type="button" value="6秒の実験を行う" onClick="location.href='sight-vs-sound_6.html'" id="resumeButton_6" disabled>
     <input type="button" value="12秒の実験を行う" onClick="location.href='sight-vs-sound_12.html'" id="resumeButton_12" disabled>
+    <br>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe9JCzNJdJOeP0YCDG04A2OBao-nhhS0DZxYD-UNRRBWircoQ/viewform?embedded=true" id="form" width="640" height="2616" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
   </div>
 </body>
   <script type="text/javascript">
@@ -76,13 +76,13 @@
     document.getElementById('form').onload = function () {
       load++;
         if (load > 1) {
-          var element = document.documentElement;
-          var bottom = element.scrollHeight - element.clientHeight;
-          var center = (document.body.scrollWidth - window.clientWidth)/2;
+          //var element = document.documentElement;
+          //var bottom = element.scrollHeight - element.clientHeight;
+          //var center = (document.body.scrollWidth - window.clientWidth)/2;
           button_6.disabled = false;
           button_12.disabled = false;
           setTimeout(secondscript, 100);
-          window.scroll(center,bottom);
+          window.scroll(0,0);
         }
     }
 
