@@ -78,11 +78,11 @@
         if (load > 1) {
           //var element = document.documentElement;
           //var bottom = element.scrollHeight - element.clientHeight;
-          //var center = (document.body.scrollWidth - window.clientWidth)/2;
+          var center = (document.body.scrollWidth - window.innerWidth)/2;
           button_6.disabled = false;
           button_12.disabled = false;
           setTimeout(secondscript, 100);
-          window.scroll(0,0);
+          window.scroll(center,0);
         }
     }
 
