@@ -70,7 +70,8 @@
     setTimeout(firstscript, 100);
 
     var element = document.documentElement;
-    var bottom = element.scrollHeight - element.clientHeight;
+    var bottom = element.scrollHeight - window.innerHeight;
+    var center = (element.scrollWidth - window.innerWidth)/2;
     var load = 0;
     var button_6 = document.getElementById('resumeButton_6');
     var button_12 = document.getElementById('resumeButton_12');
@@ -80,7 +81,7 @@
           button_6.disabled = false;
           button_12.disabled = false;
           setTimeout(secondscript, 100);
-          window.scroll(0,bottom);
+          window.scroll(center, bottom);
         }
     }
     
