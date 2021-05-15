@@ -11,8 +11,6 @@
     }
     iframe{
       margin: 0;
-      height: 178vh;
-      width: 70%;
       text-align: center;
     }
     input {
@@ -46,7 +44,7 @@
     </header>
     <br>
     <div>
-     <iframe src="agreement.pdf"></iframe>
+     <iframe id="iframe" src="agreement.pdf" width="65%"></iframe>
     </div>
     <br>
     <input type="button" value="同意する" onClick="location.href='survey.html'">
@@ -54,8 +52,14 @@
 </body>
 <script>
   function firstscript(){
-    alert('これから実験を開始します。まずは実験説明書をお読みください。表示には時間がかかる場合がございますのでご了承のほどよろしくお願いします。表示されない場合はページの再度読み込みをお願いします。');
+    alert('実験説明書の表示に時間がかかる場合がございます。ご了承のほどよろしくお願いします。表示されない場合はページの再度読み込みをお願いします。');
   }
   setTimeout(firstscript,100);
+
+  document.getElementById('iframe').onload = function () {
+    var height = window.innerHeight;
+    iframe.style.height = height + 'px';
+  }
+
 </script>
 </html>
