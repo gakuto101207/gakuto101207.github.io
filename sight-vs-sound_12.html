@@ -55,7 +55,7 @@
     <input type="button" value="START" class="btn-flat-border" onClick="prepareVideoOrder(); this.disabled=true;">
     <input type="button" value="NEXT" class="btn-flat-border" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton" disabled>
     <p id="hide">実験回答フォーム非表示中</p>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerqJ_IAlETEK3WLJljXxPKjiNo7-9Ph3Vgl6leXwvrLbz9Dw/viewform?embedded=true" id='form' width="640" height="1350" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerqJ_IAlETEK3WLJljXxPKjiNo7-9Ph3Vgl6leXwvrLbz9Dw/viewform?embedded=true" id="form" width="640" height="1350" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
     <br>
   </div>
 </body>
@@ -82,19 +82,19 @@
     // var alphaArray = {a:[1,2,3],b:[1,3,2],c:[2,1,3],d:[2,3,1],e:[3,1,2],f:[3,2,1]};
     // var randNum = shuffle(alphaArray);
     // alphaArray = randNum;
-    
+
     document.getElementById('form').onload = function () {
       load++;
-        if (load > 1 && load <= 9){
-          form.style.visibility = "hidden";
-          hide.style.visibility = "visible";
-          window.scroll(0,0);
-          button_element.disabled = false;
-        }
-        else if (load > 9) {
-          form.style.visibility = "visible";
-          setTimeout(endscript, 100);
-        }
+      if(load > 1 && load <= 9){
+        form.style.visibility = "hidden";
+        hide.style.visibility = "visible";
+        window.scroll(0,0);
+        button_element.disabled = false;
+      }
+      else if (load > 9) {
+        form.style.visibility = "visible";
+        setTimeout(endscript, 100);
+      }
     }
 
     function prepareVideoOrder(){
@@ -151,7 +151,9 @@
       var videoorder = 0;
       var video = document.getElementById("video");
       //var button_element = document.getElementById('resumeButton');
+      //const form = document.getElementById("form");
       form.style.visibility = "hidden";
+      //const vis = document.getElementById("hide");
       hide.style.visibility = "visible";
 
       video.src = videolist[videoorder];
@@ -168,7 +170,7 @@
           video.autoplay = false;
 
           if(videoorder != videolist.length){
-            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください");
+            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。");
             form.style.visibility="visible";
             hide.style.visibility="hidden";
           } else{
@@ -220,5 +222,6 @@
     function CountUp(){
       document.getElementById("count").innerHTML = ++count;
     }
+
   </script>
 </html>
