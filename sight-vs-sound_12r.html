@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sight vs Sound</title>
+  <meta charset="UTF-8">
+  <style>
+    div.c {
+      margin: 0;
+      font-size: 20px;
+      text-align: center;
+    }
+    iframe.c{
+      margin: 0;
+    }
+    input {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 1em 0.3em;
+      padding: 0.6em 1em;
+      font-size: 1em;
+      background-color: black;
+      color: #FFF;
+      border-radius: 3px;
+      border: 0;
+      transition: 0.3s;
+    }
+    input:hover {
+      background-color: gray;
+    }
+    input:disabled {
+      color: gray;
+      background: black;
+      cursor: not-allowed;
+    }
+    video {
+      border-radius: 10px;
+      border: 10px solid #000;
+      box-shadow: 0 0 10px #000;
+    }
+    p {
+    line-height: 5px; /* 行の高さを指定する */
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="c">
+    <header>
+      <h1>Sight vs Sound</h1>
+    </header>
+    <video id="video" poster="white.jpg" height="480" width="800" autoplay></video>
+    <br>
+    <p><span id="count">0</span> / 9</P>
+    <input type="button" value="START" class="btn-flat-border" onClick="prepareVideoOrder(); this.disabled=true;">
+    <input type="button" value="NEXT" class="btn-flat-border" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton" disabled>
+    <p id="hide">実験回答フォーム非表示中</p>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerqJ_IAlETEK3WLJljXxPKjiNo7-9Ph3Vgl6leXwvrLbz9Dw/viewform?embedded=true" id='form' width="640" height="1350" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+    <br>
+  </div>
+</body>
+  <script type="text/javascript">
+
+    function setup() {
+      alert('実験を開始する前に、これから表示されるフォーム説明を熟読してください。前ページで使用したIDを貼り付けてください。');
+      const hide = document.getElementById("hide");
+      hide.style.visibility = "hidden";
+    }
+    setTimeout(setup, 100);
+
+    function endscript(){
+      alert('これにて実験は終了となります。ご協力ありがとうございました。');
+    }
+
+    var videolist = [];
+    var trialOrder = [];
+    var count = 0;
+    var load = 0;
+    const form = document.getElementById("form");
+    const hide = document.getElementById("hide");
+    var button_element = document.getElementById('resumeButton');
+    // var alphaArray = {a:[1,2,3],b:[1,3,2],c:[2,1,3],d:[2,3,1],e:[3,1,2],f:[3,2,1]};
+    // var randNum = shuffle(alphaArray);
+    // alphaArray = randNum;
+
+    document.getElementById('form').onload = function () {
+      load++;
+        if (load > 1 && load <= 9){
+          form.style.visibility = "hidden";
+          hide.style.visibility = "visible";
+          window.scroll(0,0);
+          button_element.disabled = false;
+        }
+        else if (load > 9) {
+          form.style.visibility = "visible";
+          setTimeout(endscript, 100);
+        }
+    }
+
+    function prepareVideoOrder(){
+      var triad = createRandomOrder(9);
+      var ran = ["AO", "AV", "VO", "AO", "AV", "VO", "AO", "AV", "VO"];
+      document.getElementById("count").innerHTML = ++count;
+
+      for (var i = 0; i < triad.length; i++) {
+        var ra = Math.floor(Math.random() * ran.length);
+        var r = ran[ra];
+        ran.splice(ra, 1);
+        var tmptmp = triad[i];
+        var condOrder = createRandomOrder(3);
+
+        for (var k = 0; k < 3; k++) {
+          videoname = r + tmptmp + "-" + condOrder[k] + "_12.mp4";
+          videolist.push(videoname);
+        }
+
+        var tmp_condOrder = "";
+        switch (condOrder.join('')) {
+          case "123":
+            tmp_condOrder = "a";
+            break;
+          case "132":
+            tmp_condOrder = "b";
+            break;
+          case "213":
+            tmp_condOrder = "c";
+            break;
+          case "231":
+            tmp_condOrder = "d";
+            break;
+          case "312":
+            tmp_condOrder = "e";
+            break;
+          case "321":
+            tmp_condOrder = "f";
+            break;
+          default:
+            console.log('check');
+            break;
+        }
+        trialOrder.push(String(r)+String(tmptmp)+tmp_condOrder);
+      }
+      playVideo();
+    }
+
+    //ビデオの再生
+    //配列の中身の順番にvideolistを選択
+
+    function playVideo(){
+      //読み出し
+      var videoorder = 0;
+      var video = document.getElementById("video");
+      //var button_element = document.getElementById('resumeButton');
+      form.style.visibility = "hidden";
+      hide.style.visibility = "visible";
+
+      video.src = videolist[videoorder];
+      video.load();
+      video.addEventListener('ended',function(){
+        sleep(1500);
+        videoorder++;
+        video.src = videolist[videoorder];
+        console.log(videoorder);
+        console.log(videolist[videoorder]);
+
+        if(videoorder % 3 === 0){
+          video.pause();
+          video.autoplay = false;
+
+          if(videoorder != videolist.length){
+            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください");
+            form.style.visibility="visible";
+            hide.style.visibility="hidden";
+          } else{
+            alert("ページ下のフォームに第" + count + "問の回答を入力してください。");
+            alert("以下の文字列をフォームの回答欄に貼り付け、最後にフォームの送信をお願いします。  『" + trialOrder.join('') + "』  ");
+            form.style.visibility="visible";
+            hide.style.visibility="hidden";
+          }
+        }
+      });
+    }
+
+    function createRandomOrder(n) {
+      var condOrder = [];
+      var num = 0;
+
+      //再生順決める indexof()文字列を検索　Fisher-Yatesアルゴリズム
+      while(num < n){
+        var x = Math.floor(Math.random()*n+1);
+        var tmp = condOrder.indexOf(x);
+        if (tmp == "-1"){
+          condOrder.push(x);
+        }
+        num = condOrder.length;
+      }
+
+      return condOrder;
+    }
+
+    function shuffle(list) {
+      var i = list.length;
+
+      while (--i) {
+        var j = Math.floor(Math.random() * (i + 1));
+        if (i == j) continue;
+        var k = list[i];
+        list[i] = list[j];
+        list[j] = k;
+      }
+
+      return list;
+    }
+
+    function sleep(waitMsec) {
+      var startMsec = new Date();
+      while (new Date() - startMsec < waitMsec);
+    }
+
+    function CountUp(){
+      document.getElementById("count").innerHTML = ++count;
+    }
+  </script>
+</html>
