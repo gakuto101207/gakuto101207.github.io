@@ -9,7 +9,7 @@
       font-size: 20px;
       text-align: center;
     }
-    iframe.c{
+    iframe {
       margin: 0;
       text-align: center;
     }
@@ -34,6 +34,11 @@
       background: black;
       cursor: not-allowed;
     }
+    p {
+      margin-left: auto;
+      margin-right: auto;
+      width: 60%
+    }
   }
   </style>
 </head>
@@ -42,24 +47,23 @@
     <header>
       <h1>Sight vs Sound</h1>
     </header>
-    <br>
-      <iframe class="c" src='agreement.pdf' width='61%' height='1000px' frameBorder='0' scrolling='no' id='iframe' onLoad='iframeResize' frameborder="0"></iframe>
-    <br>
-    <input type="button" value="同意する" onClick="location.href='survey.html'">
+    <div class="c">
+      <br>
+      <div class="c">
+        <iframe src='agreement.pdf' width='61%' height='1000px' frameBorder='0' scrolling='no' frameborder="0"></iframe>
+        <br>
+        <p>上記の実験説明書が読み終わりましたら、[6秒の実験]または[12秒の実験]どちらかをお選びください。それと同時にこの実験に同意したものとします。</p>
+      </div>
+      <input type="button" value="6秒の実験" onClick="location.href='sight-vs-sound_6.html'">
+      <input type="button" value="12秒の実験" onClick="location.href='aight-vs-sound_12.html'">
+    </div>
   </div>
 </body>
 <script>
   function firstscript(){
-    alert('これからsight-vs-soundの実験を開始します。この実験は複数の動画再生が行われるため、パソコンでの操作をお願いします。まずは、表示される実験説明書をお読みください。');
+    alert('これからsight-vs-soundの実験を開始します。この実験は複数の動画再生が行われるため、パソコンでの操作をお願いします。まずは、表示される実験説明書をお読みください。表示されない場合は、再度ページの読み込みをお願いします。');
   }
   setTimeout(firstscript,100);
 
-  /*function iframeResize(){
-    const frame = document.getElementById('iframe');
-    const height = frame.contentWindow.document.body.scrollHeight;
-    frame.style.height = height + 'px';
-    alert(height);
-  }
-  */
 </script>
 </html>
