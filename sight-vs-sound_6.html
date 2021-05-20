@@ -64,7 +64,6 @@
       <input type="button" value="START" class="black" onClick="prepareVideoOrder(); this.disabled=true;">
       <input type="button" value="NEXT" class="black" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton" disabled>
       <input type="button" value="RESET" class="black" onClick="video.play(); video.autoplay = true;" id="reButton" disabled>
-      <p id="hide">実験回答フォーム非表示中</p>
     </div>
     <div>
       <div>
@@ -87,11 +86,11 @@
   </div>
 </body>
   <script type="text/javascript">
-
+    //回答フォームを非表示中にするには　<p id="hide">実験回答フォーム非表示中</p>　を66の下に
     //初期動作
     function setup() {
-      const hide = document.getElementById("hide");
-      hide.style.visibility = "hidden";
+      //const hide = document.getElementById("hide");
+      //hide.style.visibility = "hidden";
       alert('実験を開始する前に、下部に表示されるフォーム説明を熟読してください。');
     }
     setTimeout(setup, 100);
@@ -133,15 +132,16 @@
     document.getElementById('form').onload = function () {
       load++;
       if(load > 1 && load <= 9){
-        form.style.visibility = "hidden";
-        hide.style.visibility = "visible";
+        //form.style.visibility = "hidden";
+        //hide.style.visibility = "visible";
         window.scroll(0,0);
         rebutton_element.disabled= true;
         button_element.disabled = false;
       }
       else if (load > 9) {
-        form.style.visibility = "visible";
+        //form.style.visibility = "visible";
         setTimeout(endscript, 100);
+        rebutton_element.disabled = true;
       }
     }
 
@@ -200,9 +200,9 @@
       var videoorder = 0;
       //var button_element = document.getElementById('resumeButton');
       //const form = document.getElementById("form");
-      form.style.visibility = "hidden";
+      //form.style.visibility = "hidden";
       //const vis = document.getElementById("hide");
-      hide.style.visibility = "visible";
+      //hide.style.visibility = "visible";
 
       video.src = videolist[videoorder];
       video.load();
@@ -237,8 +237,8 @@
           type.innerHTML = "AudioVisual";
         }
         type.style.visibility="visible"
-        form.style.visibility="hidden";
-        rebutton_element.disabled="true";
+        //form.style.visibility="hidden";
+        rebutton_element.disabled = true;
         sample.innerHTML = "1";
       });
 
@@ -260,15 +260,15 @@
 
           if(videoorder != videolist.length){
             alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度視聴する場合はRESETボタンをしてください。");
-            form.style.visibility="visible";
-            hide.style.visibility="hidden";
+            //form.style.visibility="visible";
+            //hide.style.visibility="hidden";
             video.controls = false;
             type.style.visibility="hidden";
           } else {
             alert("ページ下のフォームに第" + count + "問の回答を入力してください。その後、基本調査への回答もお願いします。もう一度視聴する場合はRESETボタンをしてください。");
             document.getElementById("str").value = trialOrder.join('');
-            form.style.visibility="visible";
-            hide.style.visibility="hidden";
+            //form.style.visibility="visible";
+            //hide.style.visibility="hidden";
             video.controls = false;
             type.style.visibility="hidden";
           }
