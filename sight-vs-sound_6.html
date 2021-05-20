@@ -259,13 +259,13 @@
           rebutton_element.disabled=false;
 
           if(videoorder != videolist.length){
-            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度聞く場合はRESETボタンをしてください。");
+            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度視聴する場合はRESETボタンをしてください。");
             form.style.visibility="visible";
             hide.style.visibility="hidden";
             video.controls = false;
             type.style.visibility="hidden";
           } else {
-            alert("ページ下のフォームに第" + count + "問の回答を入力してください。その後、基本調査への回答もお願いします。もう一度聞く場合はRESETボタンをしてください。");
+            alert("ページ下のフォームに第" + count + "問の回答を入力してください。その後、基本調査への回答もお願いします。もう一度視聴する場合はRESETボタンをしてください。");
             document.getElementById("str").value = trialOrder.join('');
             form.style.visibility="visible";
             hide.style.visibility="hidden";
