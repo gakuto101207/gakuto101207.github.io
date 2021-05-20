@@ -58,11 +58,12 @@
       <h1>Sight vs Sound</h1>
     </header>
     <div>
-      <video id="video" poster="white.jpg" height="480" width="800" controls></video>
+      <video id="video" poster="white.jpg" height="480" width="800" autoplay></video>
       <br>
-      <p>第 <span id="count">0</span> 問　ビデオタイプ：<span id="type"></span></P>
+      <p>サンプル番号：<span id="count">0</span> - <span id="sample">0</span>　ビデオタイプ：<span id="type"></span></P>
       <input type="button" value="START" class="black" onClick="prepareVideoOrder(); this.disabled=true;">
-      <input type="button" value="NEXT" class="black" onClick="CountUp(); video.controls = true; this.disabled=true;" id="resumeButton" disabled>
+      <input type="button" value="NEXT" class="black" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton" disabled>
+      <input type="button" value="RESET" class="black" onClick="video.play(); video.autoplay = true;" id="reButton" disabled>
       <p id="hide">実験回答フォーム非表示中</p>
     </div>
     <div>
@@ -91,7 +92,6 @@
     function setup() {
       const hide = document.getElementById("hide");
       hide.style.visibility = "hidden";
-      video.controls = false;
       alert('実験を開始する前に、下部に表示されるフォーム説明を熟読してください。');
     }
     setTimeout(setup, 100);
@@ -124,7 +124,8 @@
     var button_element = document.getElementById('resumeButton');
     var video = document.getElementById("video");
     var type = document.getElementById("type");
-
+    var rebutton_element = document.getElementById('reButton');
+    var sample = document.getElementById("sample");
     // var alphaArray = {a:[1,2,3],b:[1,3,2],c:[2,1,3],d:[2,3,1],e:[3,1,2],f:[3,2,1]};
     // var randNum = shuffle(alphaArray);
     // alphaArray = randNum;
@@ -135,6 +136,7 @@
         form.style.visibility = "hidden";
         hide.style.visibility = "visible";
         window.scroll(0,0);
+        rebutton_element.disabled= true;
         button_element.disabled = false;
       }
       else if (load > 9) {
@@ -144,10 +146,10 @@
     }
 
     function prepareVideoOrder(){
-      video.controls = true;
       var triad = createRandomOrder(9);
       var ran = ["AO", "AV", "VO", "AO", "AV", "VO", "AO", "AV", "VO"];
       document.getElementById("count").innerHTML = ++count;
+      sample.innerHTML = "1";
 
       for (var i = 0; i < triad.length; i++) {
         var ra = Math.floor(Math.random() * ran.length);
@@ -204,6 +206,7 @@
 
       video.src = videolist[videoorder];
       video.load();
+
       if(videolist[videoorder].substring(0,2) == "AO"){
         type.innerHTML = "Audio-only";
       } else if(videolist[videoorder].substring(0,2) == "VO"){
@@ -223,24 +226,46 @@
         type.style.visibility="visible"
       });
 
+      rebutton_element.addEventListener('click', function(){
+        videoorder = videoorder - 3;
+        video.src = videolist[videoorder];
+        if(videolist[videoorder].substring(0,2) == "AO"){
+          type.innerHTML = "Audio-only";
+        } else if(videolist[videoorder].substring(0,2) == "VO"){
+          type.innerHTML = "Visual-only";
+        } else if(videolist[videoorder].substring(0,2) == "AV"){
+          type.innerHTML = "AudioVisual";
+        }
+        type.style.visibility="visible"
+        form.style.visibility="hidden";
+        rebutton_element.disabled="true";
+        sample.innerHTML = "1";
+      });
+
       video.addEventListener('ended',function(){
-        sleep(1500);
+        sleep(2000);
         videoorder++;
         video.src = videolist[videoorder];
         console.log(videoorder);
         console.log(videolist[videoorder]);
 
-        if(videoorder % 3 === 0){
+        if(videoorder % 3 === 1){
+          sample.innerHTML = "2";
+        } else if(videoorder % 3 === 2){
+          sample.innerHTML = "3";
+        } else if(videoorder % 3 === 0){
           video.pause();
+          video.autoplay = false;
+          rebutton_element.disabled=false;
 
           if(videoorder != videolist.length){
-            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。");
+            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度聞く場合はRESETボタンをしてください。");
             form.style.visibility="visible";
             hide.style.visibility="hidden";
             video.controls = false;
             type.style.visibility="hidden";
           } else {
-            alert("ページ下のフォームに第" + count + "問の回答を入力してください。その後、基本調査への回答もお願いします。");
+            alert("ページ下のフォームに第" + count + "問の回答を入力してください。その後、基本調査への回答もお願いします。もう一度聞く場合はRESETボタンをしてください。");
             document.getElementById("str").value = trialOrder.join('');
             form.style.visibility="visible";
             hide.style.visibility="hidden";
@@ -286,6 +311,7 @@
     //問題数のカウント
     function CountUp(){
       document.getElementById("count").innerHTML = ++count;
+      sample.innerHTML = "1";
     }
 
     //お礼
