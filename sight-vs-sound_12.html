@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sight vs Sound</title>
+  <title>Sight-vs-Sound</title>
   <meta charset="UTF-8">
   <style>
     div.c {
@@ -16,8 +16,9 @@
       -moz-appearance: none;
       -webkit-appearance: none;
       appearance: none;
-      margin: 1em 0.3em;
-      padding: 0.6em 1em;
+      margin: 1em 0.5em;
+      margin-bottom: 2em;
+      padding: 0.6em 1.2em;
       font-size: 1em;
       background-color: black;
       color: #FFF;
@@ -33,21 +34,40 @@
       background: black;
       cursor: not-allowed;
     }
-    video {
+    div.videoframe {
+      margin: auto;
       border-radius: 10px;
       border: 10px solid #000;
       box-shadow: 0 0 10px #000;
+      width: 780px;
     }
     p {
       line-height: 5px; /* 行の高さを指定する */
-      font-size: 1em;
-    }
-    p.border{
-      border-top: 2px dashed black;
-      padding-top: 4em;
+      font-size: 1.1em;
     }
     span {
       font-size: 1.2em;
+    }
+    .shadow {
+      margin: auto;
+      margin-bottom: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+      width: 800px;
+    }
+    .border {
+      border-bottom: 2px solid grey;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      margin-bottom: 3em;
+      width: 800px;
+    }
+    h1 {
+      font-size: 50px;
+      margin-bottom: 1em;
     }
   }
   </style>
@@ -57,45 +77,58 @@
     <header>
       <h1>Sight vs Sound</h1>
     </header>
-    <div>
-      <video id="video" poster="white.jpg" height="480" width="800" autoplay></video>
+    <div class="border">
+      <div class="videoframe">
+        <video id="video" height="480px" width="780px" autoplay></video>
+      </div>
       <br>
       <p>サンプル番号：<span id="count">0</span> - <span id="sample">0</span>　ビデオタイプ：<span id="type"></span></P>
       <input type="button" value="START" class="black" onClick="prepareVideoOrder(); this.disabled=true;">
       <input type="button" value="NEXT" class="black" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton" disabled>
       <input type="button" value="RESET" class="black" onClick="video.play(); video.autoplay = true;" id="reButton" disabled>
     </div>
-    <div>
+    <div class="shadow">
       <div>
         <br>
-          <p class="border">IDが表示されます</p>
-          <input type="button" class="black" style="width:90px; height:25px; font-size: 0.8em; padding: 0.05em; margin: 0em 0.3em;" value="ID取得" onClick="getid(); this.disabled=true;"></input>
-          <input type="text" style="border: 2px solid black; width:200px; height:25px; font-size: 0.8em;" id="number" readonly>
-        <br>
+        <h2>実験回答用紙</h2>
+        <div>
+          <br>
+          <input type="button" class="black" style="width:90px; height:30px; font-size: 0.8em; padding: 0.1em; margin: 1.5em 1.5em;" value="ID取得" onClick="getid(); this.disabled=true;">
+          <input type="text" style="border: 2px solid black; width:200px; height:30px; font-size: 0.8em;" id="number" value="" placeholder="IDが表示されます" readonly>
+          <br>
+        </div>
+        <div>
+          <input type="text" style="border: 2px solid black; width:400px; height:30px; font-size: 0.8em; margin: 0 0 2em 0;" id="str" value="" placeholder="文字列が表示されます" readonly>
+        </div>
       </div>
       <div>
-        <br>
-          <p>文字列が表示されます</p>
-          <input class="border" style="border: 2px solid black; width:400px; height:25px; font-size: 0.8em;" type="text" id="str" readonly>
-        <br>
+      <br>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerqJ_IAlETEK3WLJljXxPKjiNo7-9Ph3Vgl6leXwvrLbz9Dw/viewform?embedded=true" id="form" width="640" height="1350" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+      <br>
       </div>
     </div>
-    <br>
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerqJ_IAlETEK3WLJljXxPKjiNo7-9Ph3Vgl6leXwvrLbz9Dw/viewform?embedded=true" id="form" width="640" height="1350" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
-    <br>
   </div>
 </body>
   <script type="text/javascript">
-    //回答フォームを非表示中にするには　<p id="hide">実験回答フォーム非表示中</p>　を66の下に
+
+    var videolist = [];
+    var trialOrder = [];
+    var count = 0;
+    var load = 0;
+    const form = document.getElementById("form");
+    var button_element = document.getElementById('resumeButton');
+    var video = document.getElementById("video");
+    var type = document.getElementById("type");
+    var rebutton_element = document.getElementById('reButton');
+    var sample = document.getElementById("sample");
+
     //初期動作
     function setup() {
-      //const hide = document.getElementById("hide");
-      //hide.style.visibility = "hidden";
       alert('実験を開始する前に、下部に表示されるフォーム説明を熟読してください。');
     }
     setTimeout(setup, 100);
 
-    //IDの表示
+    //IDの表示設定
     function getid() {
       var randoms = [];
       var min = 1, max = 10;
@@ -114,17 +147,6 @@
         document.getElementById("number").value = randoms.join("");
     }
 
-    var videolist = [];
-    var trialOrder = [];
-    var count = 0;
-    var load = 0;
-    const form = document.getElementById("form");
-    //const hide = document.getElementById("hide");
-    var button_element = document.getElementById('resumeButton');
-    var video = document.getElementById("video");
-    var type = document.getElementById("type");
-    var rebutton_element = document.getElementById('reButton');
-    var sample = document.getElementById("sample");
     // var alphaArray = {a:[1,2,3],b:[1,3,2],c:[2,1,3],d:[2,3,1],e:[3,1,2],f:[3,2,1]};
     // var randNum = shuffle(alphaArray);
     // alphaArray = randNum;
@@ -132,16 +154,12 @@
     document.getElementById('form').onload = function () {
       load++;
       if(load > 1 && load <= 9){
-        //form.style.visibility = "hidden";
-        //hide.style.visibility = "visible";
         window.scroll(0,0);
         rebutton_element.disabled= true;
         button_element.disabled = false;
       }
       else if (load > 9) {
-        //form.style.visibility = "visible";
-        setTimeout(endscript, 100);
-        rebutton_element.disabled = true;
+        window.location = "endwindow.html";
       }
     }
 
@@ -188,6 +206,7 @@
             break;
         }
         trialOrder.push(String(r)+String(tmptmp)+tmp_condOrder);
+        video.style.visibility = "visible";
       }
       playVideo();
     }
@@ -198,12 +217,6 @@
     function playVideo(){
       //読み出し
       var videoorder = 0;
-      //var button_element = document.getElementById('resumeButton');
-      //const form = document.getElementById("form");
-      //form.style.visibility = "hidden";
-      //const vis = document.getElementById("hide");
-      //hide.style.visibility = "visible";
-
       video.src = videolist[videoorder];
       video.load();
 
@@ -215,6 +228,7 @@
         type.innerHTML = "AudioVisual";
       }
 
+      //NEXTボタン
       button_element.addEventListener('click', function(){
         if(videolist[videoorder].substring(0,2) == "AO"){
           type.innerHTML = "Audio-only";
@@ -224,8 +238,10 @@
           type.innerHTML = "AudioVisual";
         }
         type.style.visibility="visible"
+        video.style.visibility = "visible";
       });
 
+      //RESETボタン
       rebutton_element.addEventListener('click', function(){
         videoorder = videoorder - 3;
         video.src = videolist[videoorder];
@@ -236,8 +252,8 @@
         } else if(videolist[videoorder].substring(0,2) == "AV"){
           type.innerHTML = "AudioVisual";
         }
-        type.style.visibility="visible"
-        //form.style.visibility="hidden";
+        type.style.visibility= "visible";
+        video.style.visibility = "visible";
         rebutton_element.disabled = true;
         sample.innerHTML = "1";
       });
@@ -260,17 +276,13 @@
 
           if(videoorder != videolist.length){
             alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度視聴する場合はRESETボタンをしてください。");
-            //form.style.visibility="visible";
-            //hide.style.visibility="hidden";
-            video.controls = false;
-            type.style.visibility="hidden";
+            video.style.visibility = "hidden";
+            type.style.visibility= "hidden";
           } else {
             alert("ページ下のフォームに第" + count + "問の回答を入力してください。その後、基本調査への回答もお願いします。もう一度視聴する場合はRESETボタンをしてください。");
             document.getElementById("str").value = trialOrder.join('');
-            //form.style.visibility="visible";
-            //hide.style.visibility="hidden";
-            video.controls = false;
-            type.style.visibility="hidden";
+            video.style.visibility = "hidden";
+            type.style.visibility= "hidden";
           }
         }
       });
@@ -312,11 +324,6 @@
     function CountUp(){
       document.getElementById("count").innerHTML = ++count;
       sample.innerHTML = "1";
-    }
-
-    //お礼
-    function endscript(){
-      alert('これにて実験は終了となります。ご協力ありがとうございました。');
     }
 
   </script>
