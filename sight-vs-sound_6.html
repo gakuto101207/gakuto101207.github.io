@@ -233,7 +233,7 @@
 
       //RESETボタン
       rebutton_element.addEventListener('click', function(){
-        videoorder = videoorder - 3;
+        videoorder = videoorder - 2;
         video.src = videolist[videoorder];
         if(videolist[videoorder].substring(0,2) == "AO"){
           type.innerHTML = "Audio-only";
@@ -263,7 +263,7 @@
           } else if(videoorder % 3 === 2){
             videoorder = videoorder + 1;
           } else if(videoorder % 3 === 0){
-            videoorder = videoorder + 0;
+            videoorder = videoorder + 3;
           }
           video.src = videolist[videoorder];
         } else if(load == 9){
@@ -284,10 +284,10 @@
 
       video.addEventListener('ended',function(){
         sleep(1500);
-        videoorder++;
-        video.src = videolist[videoorder];
         console.log(videoorder);
         console.log(videolist[videoorder]);
+        videoorder++;
+        video.src = videolist[videoorder];
 
         if(videoorder % 3 === 1){
           sample.innerHTML = "2";
@@ -302,6 +302,7 @@
             alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度視聴する場合はRESETボタンをしてください。");
             video.style.visibility = "hidden";
             type.style.visibility= "hidden";
+            videoorder = videoorder - 1;
           }
         }
       });
