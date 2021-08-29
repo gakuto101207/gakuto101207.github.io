@@ -5,13 +5,16 @@
   <meta charset="UTF-8">
   <style>
     div.c {
-      margin: 0;
       font-size: 20px;
       text-align: center;
+      margin-bottom: 1cm;
     }
     iframe {
-      margin: 0;
+      margin-bottom: 0.5cm;
       text-align: center;
+      width: 60%;
+      height: 100vh;
+      border: none;
     }
     input {
       -moz-appearance: none;
@@ -39,6 +42,9 @@
       margin-right: auto;
       width: 60%
     }
+    h1 {
+      font-size: 50px;
+    }
   }
   </style>
 </head>
@@ -47,14 +53,12 @@
     <header>
       <h1>Sight vs Sound</h1>
     </header>
-    <div class="c">
-      <br>
-      <div class="c">
-        <iframe src='agreement.pdf' width='61%' height='1000px' frameBorder='0' scrolling='no' frameborder="0"></iframe>
-        <br>
+    <div>
+      <div>
+        <iframe src='agreement.pdf'></iframe>
         <p>上記の実験説明書が読み終わりましたら、[同意する]を選択してください。同時に次のページに移動します。</p>
       </div>
-      <input type="button" value="同意する" onClick="location.href='sight-vs-sound_6.html'">
+      <input type="button" value="同意する" onClick="location.href='instructions.html'">
     </div>
   </div>
 </body>
