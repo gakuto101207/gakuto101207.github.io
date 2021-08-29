@@ -83,9 +83,8 @@
       </div>
       <br>
       <p>サンプル番号：<span id="count">0</span> - <span id="sample">0</span>　ビデオタイプ：<span id="type"></span></P>
-      <input type="button" value="START" class="black" onClick="prepareVideoOrder(); this.disabled=true;">
-      <input type="button" value="NEXT" class="black" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton" disabled>
-      <input type="button" value="RESET" class="black" onClick="video.play(); video.autoplay = true;" id="reButton" disabled>
+      <input type="button" value="PLAY" class="black" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton">
+      <input type="button" value="REPLAY" class="black" onClick="video.play(); video.autoplay = true;" id="reButton" disabled>
     </div>
     <div class="shadow">
       <div>
@@ -103,7 +102,7 @@
       </div>
       <div>
       <br>
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnyioHgDhMZ4j-j9eq-KI3HN6Jlpb2xH_p2KkFV7-roduQmQ/viewform?embedded=true" id="form" width="800" height="1350" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnyioHgDhMZ4j-j9eq-KI3HN6Jlpb2xH_p2KkFV7-roduQmQ/viewform?embedded=true" id="form" width="800" height="1000px" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
       <br>
       </div>
     </div>
@@ -122,13 +121,7 @@
     var rebutton_element = document.getElementById('reButton');
     var sample = document.getElementById("sample");
     var str = document.getElementById("str");
-    //str.style.visibility = "hidden";
-
-    //初期動作
-    function setup() {
-      alert('実験を開始する前に、下部に表示されるフォーム説明を熟読してください。');
-    }
-    setTimeout(setup, 100);
+    window.setTimeout(prepareVideoOrder, 1000);
 
     //IDの表示設定
     function getid() {
@@ -156,8 +149,6 @@
     function prepareVideoOrder(){
       var triad = createRandomOrder(9);
       var ran = ["AO", "AV", "VO", "AO", "AV", "VO", "AO", "AV", "VO"];
-      document.getElementById("count").innerHTML = ++count;
-      sample.innerHTML = "1";
 
       for (var i = 0; i < triad.length; i++) {
         var ra = Math.floor(Math.random() * ran.length);
@@ -196,7 +187,6 @@
             break;
         }
         trialOrder.push(String(r)+String(tmptmp)+tmp_condOrder);
-        video.style.visibility = "visible";
       }
       playVideo();
     }
@@ -209,16 +199,10 @@
       var videoorder = 0;
       video.src = videolist[videoorder];
       video.load();
+      video.pause();
+      video.style.visibility = "hidden";
 
-      if(videolist[videoorder].substring(0,2) == "AO"){
-        type.innerHTML = "Audio-only";
-      } else if(videolist[videoorder].substring(0,2) == "VO"){
-        type.innerHTML = "Visual-only";
-      } else if(videolist[videoorder].substring(0,2) == "AV"){
-        type.innerHTML = "AudioVisual";
-      }
-
-      //NEXTボタン
+      //PLAYボタン
       button_element.addEventListener('click', function(){
         if(videolist[videoorder].substring(0,2) == "AO"){
           type.innerHTML = "Audio-only";
@@ -231,7 +215,7 @@
         video.style.visibility = "visible";
       });
 
-      //RESETボタン
+      //REPLAYボタン
       rebutton_element.addEventListener('click', function(){
         videoorder = videoorder - 2;
         video.src = videolist[videoorder];
@@ -248,6 +232,7 @@
         sample.innerHTML = "1";
       });
 
+      //form読み込み
       document.getElementById('form').onload = function () {
         load++;
         if(load > 0 && load < 9){
@@ -274,35 +259,35 @@
           button_element.disabled = true;
           video.style.visibility = "hidden";
           type.style.visibility = "hidden";
-          alert("基本調査への回答をお願いします。");
-          //str.style.visibility = "visible";
+          alert("基本調査フォームの回答をお願いします。");
           str.value = trialOrder.join('');
         } else {
           window.location = "endwindow.html";
         }
       }
 
+      //再生後
       video.addEventListener('ended',function(){
         sleep(1500);
         console.log(videoorder);
         console.log(videolist[videoorder]);
-        videoorder++;
-        video.src = videolist[videoorder];
 
-        if(videoorder % 3 === 1){
+        if(videoorder % 3 === 0){
           sample.innerHTML = "2";
-        } else if(videoorder % 3 === 2){
+          videoorder++;
+          video.src = videolist[videoorder];
+        } else if(videoorder % 3 === 1){
           sample.innerHTML = "3";
-        } else if(videoorder % 3 === 0){
+          videoorder++;
+          video.src = videolist[videoorder];
+        } else if(videoorder % 3 === 2){
           video.pause();
           video.autoplay = false;
           rebutton_element.disabled=false;
 
           if(videoorder <= videolist.length){
-            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度視聴する場合はRESETボタンをしてください。");
+            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度視聴する場合はREPLAYボタンをしてください。");
             video.style.visibility = "hidden";
-            type.style.visibility= "hidden";
-            videoorder = videoorder - 1;
           }
         }
       });
