@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sight vs Sound</title>
+  <meta charset="UTF-8">
+  <style>
+    .c {
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 1cm;
+    }
+    .containar {
+      overflow: hidden;
+    }
+    .containar .left {
+      float: left;
+      width: 50%;
+    }
+    .containar .right {
+      float: right;
+      width: 50%;
+    }
+    .bottom {
+      margin: 0 1em 1em 2em;
+      text-align: left;
+    }
+    .clear{
+      clear: both;
+      margin-top: 4em;
+    }
+    iframe {
+      width: 95%;
+      height: 1180px;
+      border: none;
+      margin-right: 1em;
+      background-color: none;
+    }
+    input {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 1em 0.3em;
+      padding: 0.6em 1em;
+      font-size: 1em;
+      background-color: black;
+      color: #FFF;
+      border-radius: 3px;
+      border: 0;
+      transition: 0.3s;
+    }
+    input:hover {
+      background-color: gray;
+    }
+    input:disabled {
+      color: gray;
+      background: black;
+      cursor: not-allowed;
+    }
+    h1 {
+      font-size: 50px;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="c">
+    <header>
+      <h1>Sight vs Sound</h1>
+    </header>
+    <div class="containar">
+      <div class="left">
+        <div class="bottom">
+          <h3>実験内容の説明</h3>
+          <p>「オーディオのみ」「ビジュアルのみ」「オーディオ&ビジュアル」の動画がランダムで割り当てられ、3名（1位、2位、下位）の演奏が再生されます。「最も上手だと思う演奏」と「最も下手だと思う演奏」が1人目か2人目か３人目かを判断してチェックをします。</p>
+        </div>
+        <div class="bottom">
+          <h3>実験手順の説明</h3>
+          <p>1. [ID取得]ボタンをクリックし、表示されたIDをコピーして回答フォームに貼り付けます。</P>
+          <p>2. [PLAY]ボタンを押すと動画が再生されます。</P>
+          <p>3. もう一度視聴する場合は[REPLAY]ボタンを押します。</P>
+          <p>4. 動画視聴を終えたら、回答フォームに記入して[次へ]を押します。</P>
+          <p>5. これらを繰り返し全9問の回答を終えましたら、続けて基本調査フォームに記入し、[送信]を押します。</p>
+        </div>
+        <div class="bottom">
+          <h3>注意事項</h3>
+          <p>・イヤホンまたはヘッドフォンを装着して実験を行ってください。</p>
+          <p>・各動画の音量は多少異なりますので、調整をしてください。</p>
+          <p>・回答フォーム下記の[戻る]は押さないでください。</p>
+          <p>・オーディオのみの場合は画面は白のままで、ビジュアルのみの場合は音声はありません。</p>
+          <p>・動画再生までに少々時間がかかる場合がありますのでご注意ください。</p>
+        </div>
+      </div>
+      <div class="right">
+        <iframe src='Page.pdf'></iframe>
+      </div>
+    </div>
+    <div class="clear">
+      <p>実験の準備が整いましたら下記の[実験を開始する]を押してください。</p>
+      <input type="button" value="実験を開始する" onClick="location.href='sight-vs-sound_6s.html'">
+    </div>
+  </div>
+</body>
+<script>
+</script>
+</html>
