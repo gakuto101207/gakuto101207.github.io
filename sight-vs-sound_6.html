@@ -113,7 +113,6 @@
     var videolist = [];
     var trialOrder = [];
     var count = 0;
-    var load = 0;
     const form = document.getElementById("form");
     var button_element = document.getElementById('resumeButton');
     var video = document.getElementById("video");
@@ -234,8 +233,7 @@
 
       //form読み込み
       document.getElementById('form').onload = function () {
-        load++;
-        if(load > 0 && load < 9){
+        if(videoorder < 24){
           window.scroll(0,0);
           rebutton_element.disabled= true;
           button_element.disabled = false;
@@ -251,7 +249,7 @@
             videoorder = videoorder + 3;
           }
           video.src = videolist[videoorder];
-        } else if(load == 9){
+        } else if(videoorder >= 24 && videoorder <= 26){
           video.pause();
           window.scroll(0,1000);
           video.autoplay = false;
@@ -261,6 +259,7 @@
           type.style.visibility = "hidden";
           alert("基本調査フォームの回答をお願いします。");
           str.value = trialOrder.join('');
+          videoorder = 27;
         } else {
           window.location = "endwindow.html";
         }
