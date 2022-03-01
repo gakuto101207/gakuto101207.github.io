@@ -236,6 +236,12 @@
           video.src = videolist[videoorder];
         } else if(l == 50){
             window.scroll(0,0);
+            rebutton_element.disabled= true;
+            button_element.disabled = false;
+            video.pause();
+            video.autoplay = false;
+            video.style.visibility = "hidden";
+            type.style.visibility= "hidden";
             str.value = trialOrder.join('');
         } else if(l == 51){
           window.location = "sightvssound2.html";
