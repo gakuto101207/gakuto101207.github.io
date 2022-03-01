@@ -84,7 +84,7 @@
       <br>
       <p>問題数：<span id="count">0</span> / 50　ビデオタイプ：<span id="type"></span></p>
       <input type="button" value="PLAY" class="black" onClick="video.play(); CountUp(); video.autoplay = true; this.disabled=true;" id="resumeButton">
-      <input type="button" value="REPLAY" class="black" onClick="video.autoplay = true;" id="reButton" disabled>
+      <input type="button" value="REPLAY" class="black" onClick="video.play(); video.autoplay = true;" id="reButton" disabled>
     </div>
     <div class="shadow">
       <div>
@@ -212,7 +212,6 @@
         type.style.visibility= "visible";
         video.style.visibility = "visible";
         rebutton_element.disabled = true;
-        video.play();
         //sample.innerHTML = "1";
       });
 
