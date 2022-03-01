@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <title>Sight vs Sound</title>
   <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada" rel="stylesheet">
   <style>
     div.c {
       font-size: 20px;
       text-align: center;
       margin-bottom: 1cm;
+      font-family: 'Montserrat Subrayada', sans-serif;
     }
     iframe {
-      margin-bottom: 0.5cm;
+      margin-bottom: 1cm;
       text-align: center;
       width: 60%;
       height: 100vh;
@@ -43,7 +46,10 @@
       width: 60%
     }
     h1 {
+      font-family: 'Montserrat Subrayada';
       font-size: 50px;
+      margin-top: 1.5cm;
+      margin-bottom: 1.5cm;
     }
   }
   </style>
@@ -51,11 +57,11 @@
 <body>
   <div class="c">
     <header>
-      <h1>Sight vs Sound</h1>
+      <h1>SIGHT VS SOUND</h1>
     </header>
     <div>
       <div>
-        <iframe src='agreement.pdf'></iframe>
+        <iframe src='consent-form.pdf'></iframe>
         <p>上記の実験説明書が読み終わりましたら、[同意する]を選択してください。同時に次のページに移動します。</p>
       </div>
       <input type="button" value="同意する" onClick="location.href='instructions.html'">
@@ -64,7 +70,7 @@
 </body>
 <script>
   function firstscript(){
-    alert('これからsight-vs-soundの実験を開始します。この実験は複数の動画再生が行われるため、パソコンでの操作をお願いします。まずは、表示される実験説明書をお読みください。表示されない場合は、再度ページの読み込みをお願いします。');
+    alert('音楽における聴覚情報・視覚情報の実験を開始します。\nこの実験は複数の動画再生が行われますので、パソコンでの操作をお願いします。\n\nまずは、下記の実験説明書をお読みください。表示されない場合は再度ページの読み込みをお願いします。');
   }
   setTimeout(firstscript,100);
 

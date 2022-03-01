@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sight-vs-Sound</title>
+  <title>Sight vs Sound</title>
   <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada" rel="stylesheet">
   <style>
     div.c {
       margin: auto;
@@ -63,8 +64,10 @@
       width: 800px;
     }
     h1 {
+      font-family: 'Montserrat Subrayada';
       font-size: 50px;
-      margin-bottom: 1em;
+      margin-top: 1.5cm;
+      margin-bottom: 1.5cm;
     }
   }
   </style>
@@ -72,7 +75,7 @@
 <body>
   <div class="c">
     <header>
-      <h1>Sight vs Sound</h1>
+      <h1>SIGHT VS SOUND</h1>
     </header>
     <div class="border">
       <div class="videoframe">
@@ -104,7 +107,7 @@
     var videolist = [];
     var trialOrder = [];
     var count = 0;
-    var load = 0;
+    var l = 0;
     const form = document.getElementById("form");
     var button_element = document.getElementById('resumeButton');
     var video = document.getElementById("video");
@@ -112,7 +115,7 @@
     var rebutton_element = document.getElementById('reButton');
     //var sample = document.getElementById("sample");
     var str = document.getElementById("str");
-    var next = document.getElementById("next");
+    //var next = document.getElementById("next");
     window.setTimeout(prepareVideoOrder, 1000);
 
     //IDの表示設定
@@ -181,7 +184,6 @@
 
       //PLAYボタン
       button_element.addEventListener('click', function(){
-        load++;
         var c = videolist[videoorder].substring(0,2);
         if(c >= 26 && c <= 50){
           type.innerHTML = "Visual-only";
@@ -190,6 +192,11 @@
         }
         type.style.visibility="visible"
         video.style.visibility = "visible";
+        if(l == 0){
+          l = 1;
+          CountUp();
+          console.log("l = " + l);
+        }
       });
 
       //REPLAYボタン
@@ -210,7 +217,9 @@
 
       //form読み込み
       document.getElementById('form').onload = function () {
-        if(load > 0 && load < 50){
+        l++;
+        console.log("l = " + l);
+        if(l > 1 && l < 50){
           window.scroll(0,0);
           rebutton_element.disabled= true;
           button_element.disabled = false;
@@ -224,10 +233,10 @@
             videoorder = videoorder + 2;
           }
           video.src = videolist[videoorder];
-          if(load == 49){
+        } else if(l == 50){
+            window.scroll(0,0);
             str.value = trialOrder.join('');
-          }
-        } else if(load == 50){
+        } else if(l == 51){
           window.location = "sightvssound2.html";
         }
       }
@@ -248,7 +257,7 @@
           rebutton_element.disabled = false;
 
           if(videoorder <= videolist.length){
-            alert("ページ下のフォームに第" + count + "問の回答を入力し、次の問題に進んでください。もう一度視聴する場合はREPLAYボタンをしてください。");
+            alert("ページ下のフォームに第" + l + "問の回答を入力し、次の問題に進んでください。もう一度視聴する場合はREPLAYボタンをしてください。");
             video.style.visibility = "hidden";
           }
         }
@@ -289,7 +298,7 @@
 
     //問題数のカウント
     function CountUp(){
-      document.getElementById("count").innerHTML = ++count;
+      document.getElementById("count").innerHTML = l;
       //sample.innerHTML = "1";
     }
 
