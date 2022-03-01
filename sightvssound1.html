@@ -242,6 +242,12 @@
             video.autoplay = false;
             video.style.visibility = "hidden";
             type.style.visibility= "hidden";
+            if(videoorder % 2 === 1){
+              videoorder = videoorder + 1;
+            } else if(videoorder % 2 === 0){
+              videoorder = videoorder + 2;
+            }
+            video.src = videolist[videoorder];
             str.value = trialOrder.join('');
         } else if(l == 51){
           window.location = "sightvssound2.html";
